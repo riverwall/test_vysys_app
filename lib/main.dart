@@ -61,13 +61,13 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Agendy',
+      title: 'Vyberte si agendu',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Agendy'),
+          title: Text('Vyberte si agendu'),
         ),
         body: Center(
           child: FutureBuilder<List<Branch>>(
