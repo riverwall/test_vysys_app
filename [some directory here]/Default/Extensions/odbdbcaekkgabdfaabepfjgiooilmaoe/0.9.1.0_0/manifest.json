@@ -1,0 +1,28 @@
+{
+   "author": "Disig, a.s.",
+   "background": {
+      "scripts": [ "dispatcher.js", "native-host.js", "native-host-manager.js", "main.js" ]
+   },
+   "content_scripts": [ {
+      "js": [ "content-script.js" ],
+      "matches": [ "*://*/*", "file:///*" ],
+      "run_at": "document_start"
+   } ],
+   "default_locale": "sk",
+   "description": "Google Chrome rošírenie pre aplikáciu Disig Web Signer pre podpisovanie dokumentov zaručeným elektronickým podpisom.",
+   "icons": {
+      "128": "icons/dws_128.png",
+      "16": "icons/dws_16.png",
+      "19": "icons/dws_19.png",
+      "32": "icons/dws_32.png",
+      "38": "icons/dws_38.png",
+      "64": "icons/dws_64.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiEh1khqwPDNjbqCGRzpYc1HAj48sMRVTmZRtgmAXZ5YMxpM1j0F2mMPG/JssbHRi8xDK6hB3uaBr4Yrbkt/inv8SpOFtVjrWB5SmLNO1pDHtJsC+cIrbY3bC4daI5aTsvKLoovJ1uP0tARDQE2A9vNaFrEy3tNdM1laJD9tHZuxcX06r6OpPFT/07F+jch8dNkSNehErOf7Z9dC1LMcRv7+QabV4OxVfOl2dBTouAId16c48bmXfSpL7M1as/mFiNynwFt3HD5PoMW/EeJrUl8jmOFM11oW8E04QlyIZr60nPZscSjgthNCPwNIu/Z+iA3jcaSUSeRWe3hcGB0UUVwIDAQAB",
+   "manifest_version": 2,
+   "name": "Disig Web Signer 1.0.7",
+   "permissions": [ "nativeMessaging", "\u003Call_urls>" ],
+   "short_name": "WebSigner",
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "0.9.1.0"
+}

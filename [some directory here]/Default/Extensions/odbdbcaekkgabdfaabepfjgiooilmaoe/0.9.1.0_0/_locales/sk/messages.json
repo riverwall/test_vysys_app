@@ -1,0 +1,6 @@
+{
+   "websigner_version": {
+      "description": "Version of WebSigner component.",
+      "message": "1.0.7"
+   }
+}
