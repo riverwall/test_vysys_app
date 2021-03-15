@@ -8,7 +8,7 @@ import 'package:test_vysys_app/data.dart';
 Future<List<Branch>> fetchAlbum() async {
   final response =
 //  await http.get(Uri.http('172.24.36.13:10039','/test/api/availableAgenda'));
-  await http.get(Uri.http('wmneo:8181','/calendar-backend/public/api/v3/servicesgroups/tree/'));
+  await http.get(Uri.https('java.ditec.sk','/calendar-backend/public/api/v3/servicesgroups/tree/'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
