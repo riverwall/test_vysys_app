@@ -23,7 +23,7 @@ class _ScreenOneState extends State<ScreenOne> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Screen One"),
+          title: Text("Výber služby"),
         ),
         body: FutureBuilder<List<DataAgenda>>(
       future: futureAlbum,
@@ -52,7 +52,7 @@ class _ScreenOneState extends State<ScreenOne> {
           }
 
           // By default, show a loading spinner.
-          return CircularProgressIndicator();
+          return Center (child: CircularProgressIndicator() );
         },
       ),
       ),

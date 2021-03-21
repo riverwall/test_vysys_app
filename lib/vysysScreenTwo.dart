@@ -8,7 +8,7 @@ class ScreenTwo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("${data['title']}"),
+        title: Text("${data['name']}"),
       ),
       body: Center(
         child: Wrap(
@@ -19,11 +19,11 @@ class ScreenTwo extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
             Text(
-              "PARENT-ID ${data['parent_id']}",
+              "qpId ${data['qpId']}",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
             Text(
-              "EXTRAS: ${data['extra']}",
+              "custom: ${data['custom']}",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ],

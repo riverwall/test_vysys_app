@@ -12,6 +12,7 @@ Future<List<DataAgenda>> fetchAlbum() async {
   final response =
 //  await http.get(Uri.http('172.24.36.13:10039','/test/api/availableAgenda'));
   await http.get(Uri.https('java.ditec.sk','/calendar-backend/public/api/v3/servicesgroups/tree/'));
+  await Future.delayed(Duration(seconds: 5));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
@@ -59,15 +60,6 @@ class _MyHomePageState extends State<MyHomePage> {
     futureAlbum = fetchAlbum();
   }
 
-//  List<DataAgenda> getData(){
-//    List<DataAgenda> data;
-//
-//    futureAlbum.then((futureData){
-//      data = futureData;
-//    });
-//    return data;
-//  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -101,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 width: 220.0,
               );
             } else if (snapshot.hasError) {
-              return Text("${snapshot.error}");
+                return Text("${snapshot.error}");
             }
 
             // By default, show a loading spinner.

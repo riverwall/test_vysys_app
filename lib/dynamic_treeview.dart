@@ -112,7 +112,9 @@ class _DynamicTreeViewOriState extends State<DynamicTreeView> {
 
     var p = ParentWidget(
       baseData: data,
-      onTap: widget.onTap,
+
+        //TODO tap pre agendy vypnuty
+//      onTap: widget.onTap,
       config: widget.config,
       children: _buildChildren(childrenData),
       key: ObjectKey({
