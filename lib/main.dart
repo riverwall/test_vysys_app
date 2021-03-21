@@ -3,9 +3,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:test_vysys_app/data.dart';
+import 'package:test_vysys_app/data_agenda.dart';
 
-Future<List<Branch>> fetchAlbum() async {
+Future<List<DataAgenda>> fetchAlbum() async {
   final response =
 //  await http.get(Uri.http('172.24.36.13:10039','/test/api/availableAgenda'));
   await http.get(Uri.https('java.ditec.sk','/calendar-backend/public/api/v3/servicesgroups/tree/'));
@@ -14,7 +14,7 @@ Future<List<Branch>> fetchAlbum() async {
     // If the server did return a 200 OK response,
     // then parse the JSON.
     final parsed= jsonDecode(response.body).cast<Map<String, dynamic>>();
-    return parsed.map<Branch>((json)=>Branch.fromJson(json)).toList();
+    return parsed.map<DataAgenda>((json)=>DataAgenda.fromJson(json)).toList();
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
@@ -50,7 +50,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Future<List<Branch>> futureAlbum;
+  Future<List<DataAgenda>> futureAlbum;
 
   @override
   void initState() {
@@ -70,14 +70,14 @@ class _MyAppState extends State<MyApp> {
           title: Text('Vyberte si agendu'),
         ),
         body: Center(
-          child: FutureBuilder<List<Branch>>(
+          child: FutureBuilder<List<DataAgenda>>(
             future: futureAlbum,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, index) {
-                    Branch project = snapshot.data[index];
+                    DataAgenda project = snapshot.data[index];
                     return Card(
                       child: ListTile(title: Text(project.internalName))
                     );
