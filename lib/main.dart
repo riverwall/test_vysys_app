@@ -6,13 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:test_vysys_app/dynamic_treeview.dart';
 
 import 'package:test_vysys_app/data_agenda.dart';
+import 'package:test_vysys_app/data_branch.dart';
+import 'package:test_vysys_app/data_dates.dart';
 import 'package:http/http.dart' as http;
 
-Future<List<DataAgenda>> fetchAlbum() async {
+//AGENDA
+Future<List<DataAgenda>> agendaList() async {
+
   final response =
 //  await http.get(Uri.http('172.24.36.13:10039','/test/api/availableAgenda'));
   await http.get(Uri.https('java.ditec.sk','/calendar-backend/public/api/v3/servicesgroups/tree/'));
-  await Future.delayed(Duration(seconds: 5));
+//  await http.get(Uri.http('localhost:8082','/calendar-backend/public/api/v3/servicesgroups/tree/'));
+//  await Future.delayed(Duration(seconds: 2));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
@@ -22,7 +27,75 @@ Future<List<DataAgenda>> fetchAlbum() async {
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
-    throw Exception('Failed to load album');
+    throw Exception('Failed to load DataAgenda');
+  }
+
+
+}
+
+//BRANCHES
+Future<List<Branch>> branchList(String serviceId) async {
+
+  if(serviceId.isEmpty) {
+    throw Exception('Cannot read branches. Service is not selected');
+  }
+
+  ///
+  print("branches s parametrom " + serviceId);
+
+  final response = await http.get(Uri.https('java.ditec.sk','/calendar-backend/public/api/v2/branches/available;servicePublicId=' + serviceId));
+//  final response = await http.get(Uri.http('localhost:8082','/calendar-backend/public/api/v2/branches/available;servicePublicId=' + serviceId));
+//  await Future.delayed(Duration(seconds: 2));
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+
+    final dataBranch = DataBranch.fromJson(jsonDecode(response.body));
+    return dataBranch.branch;
+
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load Branch');
+  }
+}
+
+//DATES
+Future<List<DateTime>> dateList(String serviceId, String branchId) async {
+
+  if(serviceId.isEmpty) {
+    throw Exception('Cannot read dates. Service is not selected');
+  }
+
+  if(branchId.isEmpty) {
+    throw Exception('Cannot read dates. Branch is not selected');
+  }
+
+  ///
+  print("dates s parametami serviceId: " + serviceId + ", branchId: " + branchId);
+
+  String parameters = '/calendar-backend/public/api/v1/branches/'+ branchId +'/services/'+ serviceId +'/dates/';
+
+  final response = await http.get(Uri.https('java.ditec.sk', parameters));
+//  final response = await http.get(Uri.http('localhost:8082','/calendar-backend/public/api/v2/branches/available;servicePublicId=' + serviceId));
+//  await Future.delayed(Duration(seconds: 2));
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+
+    final dataDates = DataDates.fromJson(jsonDecode(response.body));
+    List<String> dateString = dataDates.dates;
+
+    //konverzia
+    List<DateTime> dateList = dateString.map((e) => DateTime.parse(e)).toList();
+    return dateList;
+
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load Dates');
   }
 }
 
@@ -57,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    futureAlbum = fetchAlbum();
+    futureAlbum = agendaList();
   }
 
   @override

@@ -10,12 +10,12 @@ class ScreenOne extends StatefulWidget {
 }
 
 class _ScreenOneState extends State<ScreenOne> {
-  Future<List<DataAgenda>> futureAlbum;
+  Future<List<DataAgenda>> futureAgendaList;
 
   @override
   void initState() {
     super.initState();
-    futureAlbum = fetchAlbum();
+    futureAgendaList = agendaList();
   }
 
   @override
@@ -26,7 +26,7 @@ class _ScreenOneState extends State<ScreenOne> {
           title: Text("Výber služby"),
         ),
         body: FutureBuilder<List<DataAgenda>>(
-      future: futureAlbum,
+      future: futureAgendaList,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return DynamicTreeView(
@@ -37,7 +37,7 @@ class _ScreenOneState extends State<ScreenOne> {
                   parentPaddingEdgeInsets:
                   EdgeInsets.only(left: 16, top: 0, bottom: 0)),
               onTap: (m) {
-                print("onChildTap -> $m");
+                print("SELECTED SERVICE -> $m");
                 Navigator.push(
                     context,
                     MaterialPageRoute(

@@ -134,6 +134,7 @@ class _DynamicTreeViewOriState extends State<DynamicTreeView> {
           onTap: () {
             widget?.onTap({
               'id': '${k.id}',
+              'publicId': '${k.publicId}',
               'name': '${k.name}',
               'qpId': '${k.qpId}',
               'custom': '${k.custom}'
