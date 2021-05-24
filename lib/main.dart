@@ -8,6 +8,7 @@ import 'package:test_vysys_app/dynamic_treeview.dart';
 import 'package:test_vysys_app/data_agenda.dart';
 import 'package:test_vysys_app/data_branch.dart';
 import 'package:test_vysys_app/data_dates.dart';
+import 'package:test_vysys_app/data_times.dart';
 import 'package:http/http.dart' as http;
 
 //AGENDA
@@ -96,6 +97,52 @@ Future<List<DateTime>> dateList(String serviceId, String branchId) async {
     // If the server did not return a 200 OK response,
     // then throw an exception.
     throw Exception('Failed to load Dates');
+  }
+}
+
+//TIMES
+Future<List<String>> timeList(String serviceId, String branchId, DateTime date) async {
+
+  if(serviceId.isEmpty) {
+    throw Exception('Cannot read times. Service is not selected');
+  }
+
+  if(branchId.isEmpty) {
+    throw Exception('Cannot read times. Branch is not selected');
+  }
+
+  if(date == null) {
+    throw Exception('Cannot read times. Date is not selected');
+  }
+
+  String dateS = "${date.toLocal()}".split(' ')[0];
+
+  ///
+  print("times s parametami serviceId: " + serviceId + ", branchId: " + branchId + ", dateString: " + dateS);
+
+//  http://{{host}}:{{port}}/calendar-backend/public/api/v1/branches/{{branchPublicId}}/services/{{servicePublicId}}/dates/{{dates}}/times/
+
+  String parameters = '/calendar-backend/public/api/v1/branches/'+ branchId +'/services/'+ serviceId +'/dates/'+ dateS +'/times/';
+
+  final response = await http.get(Uri.https('java.ditec.sk', parameters));
+//  final response = await http.get(Uri.http('localhost:8082','/calendar-backend/public/api/v2/branches/available;servicePublicId=' + serviceId));
+//  await Future.delayed(Duration(seconds: 2));
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+
+    final dataTimes = DataTimes.fromJson(jsonDecode(response.body));
+    List<String> timesList = dataTimes.times;
+
+    //konverzia
+//    List<String> dateList = dateString.map((e) => DateTime.parse(e)).toList();
+    return timesList;
+
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load Times');
   }
 }
 
